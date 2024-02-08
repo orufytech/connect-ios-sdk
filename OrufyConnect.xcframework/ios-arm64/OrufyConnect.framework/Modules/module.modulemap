@@ -1,0 +1,8 @@
+framework module OrufyConnect {
+    umbrella header "OrufyConnect.h"
+
+    export *
+    module * { export * }
+
+    use Foundation
+}
