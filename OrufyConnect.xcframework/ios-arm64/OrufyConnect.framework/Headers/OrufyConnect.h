@@ -237,6 +237,12 @@ __attribute__((swift_name("Platform_iosKt")))
 + (id<OrufyConnectPlatform>)getPlatform __attribute__((swift_name("getPlatform()")));
 @end
 
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ToastUtilKt")))
+@interface OrufyConnectToastUtilKt : OrufyConnectBase
++ (void)showToastMessage:(NSString *)message duration:(double)duration __attribute__((swift_name("showToast(message:duration:)")));
+@end
+
 #pragma pop_macro("_Nullable_result")
 #pragma clang diagnostic pop
 NS_ASSUME_NONNULL_END
