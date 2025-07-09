@@ -232,6 +232,12 @@ __attribute__((swift_name("UrlHandler")))
 @end
 
 __attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ConstantsKt")))
+@interface OrufyConnectConstantsKt : OrufyConnectBase
+@property (class, readonly) NSString *CONNECT_LOG_TAG __attribute__((swift_name("CONNECT_LOG_TAG")));
+@end
+
+__attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("Platform_iosKt")))
 @interface OrufyConnectPlatform_iosKt : OrufyConnectBase
 + (id<OrufyConnectPlatform>)getPlatform __attribute__((swift_name("getPlatform()")));
