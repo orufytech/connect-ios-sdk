@@ -6,7 +6,7 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
-@class OrufyConnectOrufyConnectConfig, UNNotificationResponse, UIViewController, OrufyConnectOrufyConnectUser, OrufyConnectOrufyConnectUserBuilder, OrufyConnectUrlHandler;
+@class OrufyConnectOrufyConnectConfig, UNNotificationResponse, UIViewController, OrufyConnectOrufyConnectUser, OrufyConnectOrufyConnectUserBuilder, OrufyConnectUrlHandler, WKWebView, OrufyConnectWidgetFunctionCbHandler;
 
 @protocol OrufyConnectPlatform;
 
@@ -176,13 +176,27 @@ __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("OrufyConnect")))
 @interface OrufyConnectOrufyConnect : OrufyConnectBase
 - (instancetype)initWithConfig:(OrufyConnectOrufyConnectConfig *)config __attribute__((swift_name("init(config:)"))) __attribute__((objc_designated_initializer));
+- (void)getRestoreIdRestoreId:(void (^)(NSString * _Nullable))restoreId __attribute__((swift_name("getRestoreId(restoreId:)")));
+- (void)getUnreadChatCountsCallback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("getUnreadChatCounts(callback:)")));
+- (void)getUserCallback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("getUser(callback:)")));
 - (void)handleOrufyConnectNotificationResponse:(UNNotificationResponse *)response viewController:(UIViewController *)viewController __attribute__((swift_name("handleOrufyConnectNotification(response:viewController:)")));
+- (void)isInitializationDoneCallback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("isInitializationDone(callback:)")));
 - (BOOL)isOrufyConnectNotificationResponse:(UNNotificationResponse *)response __attribute__((swift_name("isOrufyConnectNotification(response:)")));
+- (void)isUserLoggedInCallback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("isUserLoggedIn(callback:)")));
 - (void)loginUser:(OrufyConnectOrufyConnectUser *)user __attribute__((swift_name("login(user:)")));
 - (void)logout __attribute__((swift_name("logout()")));
+- (void)onUnreadChatCountsChangeCount:(void (^)(id _Nullable))count __attribute__((swift_name("onUnreadChatCountsChange(count:)")));
+- (void)openChatChatId:(NSString * _Nullable)chatId __attribute__((swift_name("openChat(chatId:)")));
+- (void)sendChatMessageMessage:(NSString *)message callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("sendChatMessage(message:callback:)")));
+- (void)setAppIdAppId:(NSString *)appId callback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("setAppId(appId:callback:)")));
+- (void)setExternalUseridExternalId:(NSString *)externalId callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("setExternalUserid(externalId:callback:)")));
 - (void)setPushRegistrationTokenToken:(NSString *)token __attribute__((swift_name("setPushRegistrationToken(token:)")));
 - (void)setUserUser:(OrufyConnectOrufyConnectUser *)user __attribute__((swift_name("setUser(user:)")));
+- (void)setUserDetailsData:(NSString *)data __attribute__((swift_name("setUserDetails(data:)")));
+- (void)setWidgetConfigConfig:(NSString *)config __attribute__((swift_name("setWidgetConfig(config:)")));
 - (void)showConversationViewController:(UIViewController *)viewController __attribute__((swift_name("showConversation(viewController:)")));
+- (void)widgetLoginData:(NSString *)data __attribute__((swift_name("widgetLogin(data:)")));
+- (void)widgetLogout __attribute__((swift_name("widgetLogout()")));
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -232,6 +246,21 @@ __attribute__((swift_name("UrlHandler")))
 @end
 
 __attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("WidgetFunctionCbHandler")))
+@interface OrufyConnectWidgetFunctionCbHandler : OrufyConnectBase
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+@property NSString * _Nullable chatMsg __attribute__((swift_name("chatMsg")));
+@property NSString * _Nullable externalId __attribute__((swift_name("externalId")));
+@property NSString * _Nullable isLogout __attribute__((swift_name("isLogout")));
+@property NSString * _Nullable restoreId __attribute__((swift_name("restoreId")));
+@property id _Nullable storeUnreadChatCount __attribute__((swift_name("storeUnreadChatCount")));
+@property id _Nullable unreadChatCount __attribute__((swift_name("unreadChatCount")));
+@property NSString * _Nullable unreadCount __attribute__((swift_name("unreadCount")));
+@property NSString * _Nullable user __attribute__((swift_name("user")));
+@end
+
+__attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("ConstantsKt")))
 @interface OrufyConnectConstantsKt : OrufyConnectBase
 @property (class, readonly) NSString *CONNECT_LOG_TAG __attribute__((swift_name("CONNECT_LOG_TAG")));
@@ -247,6 +276,25 @@ __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("ToastUtilKt")))
 @interface OrufyConnectToastUtilKt : OrufyConnectBase
 + (void)showToastMessage:(NSString *)message duration:(double)duration __attribute__((swift_name("showToast(message:duration:)")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("WidgetFunctionsKt")))
+@interface OrufyConnectWidgetFunctionsKt : OrufyConnectBase
++ (void)widgetGetRestoreIdWebView:(WKWebView * _Nullable)webView widgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler restoreId:(void (^)(NSString * _Nullable))restoreId __attribute__((swift_name("widgetGetRestoreId(webView:widgetFunctionHandler:restoreId:)")));
++ (void)widgetGetUnreadChatCountsWebView:(WKWebView * _Nullable)webView widgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("widgetGetUnreadChatCounts(webView:widgetFunctionHandler:callback:)")));
++ (void)widgetGetUserWebView:(WKWebView * _Nullable)webView widgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("widgetGetUser(webView:widgetFunctionHandler:callback:)")));
++ (void)widgetIsInitializationDoneWebView:(WKWebView * _Nullable)webView callback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("widgetIsInitializationDone(webView:callback:)")));
++ (void)widgetIsUserLoggedInWebView:(WKWebView * _Nullable)webView callback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("widgetIsUserLoggedIn(webView:callback:)")));
++ (void)widgetLoginFunWebView:(WKWebView * _Nullable)webView data:(NSString *)data __attribute__((swift_name("widgetLoginFun(webView:data:)")));
++ (void)widgetLogoutFunWebView:(WKWebView * _Nullable)webView __attribute__((swift_name("widgetLogoutFun(webView:)")));
++ (void)widgetOnUnreadChatCountsChangeWebView:(WKWebView * _Nullable)webView widgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler count:(void (^)(id _Nullable))count __attribute__((swift_name("widgetOnUnreadChatCountsChange(webView:widgetFunctionHandler:count:)")));
++ (void)widgetOpenChatWebView:(WKWebView * _Nullable)webView chatId:(NSString * _Nullable)chatId __attribute__((swift_name("widgetOpenChat(webView:chatId:)")));
++ (void)widgetSendChatMessageWidgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler webView:(WKWebView * _Nullable)webView message:(NSString *)message callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("widgetSendChatMessage(widgetFunctionHandler:webView:message:callback:)")));
++ (void)widgetSetAppIdWebView:(WKWebView * _Nullable)webView appId:(NSString *)appId callback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("widgetSetAppId(webView:appId:callback:)")));
++ (void)widgetSetConfigWebView:(WKWebView * _Nullable)webView config:(NSString *)config __attribute__((swift_name("widgetSetConfig(webView:config:)")));
++ (void)widgetSetExternalUseridWebView:(WKWebView * _Nullable)webView widgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler externalId:(NSString *)externalId callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("widgetSetExternalUserid(webView:widgetFunctionHandler:externalId:callback:)")));
++ (void)widgetSetUserDetailsWebView:(WKWebView * _Nullable)webView data:(NSString *)data __attribute__((swift_name("widgetSetUserDetails(webView:data:)")));
 @end
 
 #pragma pop_macro("_Nullable_result")
