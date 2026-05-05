@@ -250,6 +250,8 @@ __attribute__((swift_name("WidgetFunctionCbHandler")))
 @interface OrufyConnectWidgetFunctionCbHandler : OrufyConnectBase
 - (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
 + (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+@property void (^ _Nullable chatCountChangeListener)(id _Nullable) __attribute__((swift_name("chatCountChangeListener")));
+@property BOOL chatCountPollingActive __attribute__((swift_name("chatCountPollingActive")));
 @property NSString * _Nullable chatMsg __attribute__((swift_name("chatMsg")));
 @property NSString * _Nullable externalId __attribute__((swift_name("externalId")));
 @property NSString * _Nullable isLogout __attribute__((swift_name("isLogout")));
@@ -288,7 +290,7 @@ __attribute__((swift_name("WidgetFunctionsKt")))
 + (void)widgetIsUserLoggedInWebView:(WKWebView * _Nullable)webView callback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("widgetIsUserLoggedIn(webView:callback:)")));
 + (void)widgetLoginFunWebView:(WKWebView * _Nullable)webView data:(NSString *)data __attribute__((swift_name("widgetLoginFun(webView:data:)")));
 + (void)widgetLogoutFunWebView:(WKWebView * _Nullable)webView __attribute__((swift_name("widgetLogoutFun(webView:)")));
-+ (void)widgetOnUnreadChatCountsChangeWebView:(WKWebView * _Nullable)webView widgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler count:(void (^)(id _Nullable))count __attribute__((swift_name("widgetOnUnreadChatCountsChange(webView:widgetFunctionHandler:count:)")));
++ (void)widgetOnUnreadChatCountsChangeWidgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler count:(void (^)(id _Nullable))count __attribute__((swift_name("widgetOnUnreadChatCountsChange(widgetFunctionHandler:count:)")));
 + (void)widgetOpenChatWebView:(WKWebView * _Nullable)webView chatId:(NSString * _Nullable)chatId __attribute__((swift_name("widgetOpenChat(webView:chatId:)")));
 + (void)widgetSendChatMessageWidgetFunctionHandler:(OrufyConnectWidgetFunctionCbHandler *)widgetFunctionHandler webView:(WKWebView * _Nullable)webView message:(NSString *)message callback:(void (^)(NSString * _Nullable))callback __attribute__((swift_name("widgetSendChatMessage(widgetFunctionHandler:webView:message:callback:)")));
 + (void)widgetSetAppIdWebView:(WKWebView * _Nullable)webView appId:(NSString *)appId callback:(void (^)(OrufyConnectBoolean *))callback __attribute__((swift_name("widgetSetAppId(webView:appId:callback:)")));
